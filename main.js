@@ -6,13 +6,17 @@ const twilioClient = require("twilio")(accountSid, authToken);
 
 const { PubSub } = require("@google-cloud/pubsub");
 
+const projectId = process.env.GOOGLE_PROJECT_ID;
+const keyFilename = "./private/cloud-run-500-0f9acb44eefc.json";
+
 // Instantiates a new PubSub client
-const pubSubClient = new PubSub();
+const pubSubClient = new PubSub({ projectId, keyFilename });
 
 const subscriptionNameOrId = "buildComplete-sub";
 const timeout = 60 * 60;
 
 function listenForMessage() {
+  console.log('Application running...')
   // References an existing subscription
   const subscription = pubSubClient.subscription(subscriptionNameOrId);
 
